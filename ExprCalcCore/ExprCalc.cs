@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ExprCalc.Core.Functions;
 
 namespace ExprCalc.Core
 {
@@ -10,16 +11,24 @@ namespace ExprCalc.Core
     {
         private  string expr;
         private string result;
-        public string Result { get; }
+        public string Result 
+        {
+            get
+            {
+                return result;
+            }
+        }
         public string Expr
         {
-            get;
+            get
+            {
+                return expr;
+            }
             set
             {
                 expr = value.Trim();
             }
         }
-
 
     }
 }
