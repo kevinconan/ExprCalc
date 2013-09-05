@@ -11,7 +11,7 @@ namespace ExprCalc.Core
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(FunctionManager.GetFunc("sin").Calc(2));
+            Console.WriteLine(FunctionManager.Functions["Sin"].Calc(5));
         }
     }
 }

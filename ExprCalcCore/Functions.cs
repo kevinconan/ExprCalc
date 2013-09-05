@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,42 +34,56 @@ namespace ExprCalc.Core
 
     }
 
+    /// <summary>
+    /// 函数管理器
+    /// </summary>
     public static class FunctionManager
     {
-        private readonly static IFunction[] functions ={
-                                           new Sin(),
-                                           new Cos(),
-                                           new Tan(),
-                                           new Ln(),
-                                           new Lg(),
-                                           new Log(),
-                                      };
+        private readonly static Dictionary<string, IFunction> functions;
+
         /// <summary>
-        /// 获得所有函数对象的只读数组
+        /// 不区分大小写的比较器
         /// </summary>
-        public static IFunction[] Functions
+        /// <typeparam name="?"></typeparam>
+        private class FuncComp: IEqualityComparer<string>
+        {
+
+            #region IEqualityComparer<string> 成员
+
+            public bool Equals(string x, string y)
+            {
+                return x.Equals(y, StringComparison.CurrentCultureIgnoreCase);
+            }
+
+            public int GetHashCode(string obj)
+            {
+                return obj.ToString().ToLower().GetHashCode();
+            }
+
+            #endregion
+        }
+        /// <summary>
+        /// 初始化管理器内容
+        /// </summary>
+        static FunctionManager()
+        {
+            functions = new Dictionary<string, IFunction>(new FuncComp() as IEqualityComparer<string>);
+            functions.Add("sin", new Sin());
+            functions.Add("cos", new Cos());
+            functions.Add("tan", new Tan());
+            functions.Add("lg", new Lg());
+            functions.Add("ln", new Ln());
+            functions.Add("log", new Log());
+        }
+        /// <summary>
+        /// 获取一个只读函数集合
+        /// </summary>
+        public static Dictionary<string, IFunction> Functions
         {
             get
             {
                 return functions;
             }
-        }
-
-        /// <summary>
-        /// 通过函数名称获得函数对象
-        /// </summary>
-        /// <param name="name">函数名称</param>
-        /// <returns>函数对象</returns>
-        public static IFunction GetFunc(string name)
-        {
-            foreach (IFunction item in functions)
-            {
-                if (item.GetName().Equals(name, StringComparison.CurrentCultureIgnoreCase))
-                {
-                    return item;
-                }
-            }
-            return null;
         }
     }
 }
