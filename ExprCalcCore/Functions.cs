@@ -11,7 +11,7 @@ namespace ExprCalc.Core
     /// <summary>
     /// 函数接口
     /// </summary>
-    public interface IFunction
+    internal interface IFunction
     {
         /// <summary>
         /// 获取函数名称
@@ -37,7 +37,7 @@ namespace ExprCalc.Core
     /// <summary>
     /// 函数管理器
     /// </summary>
-    public static class FunctionManager
+    internal static class FunctionManager
     {
         private readonly static Dictionary<string, IFunction> functions;
 
@@ -67,7 +67,7 @@ namespace ExprCalc.Core
         /// </summary>
         static FunctionManager()
         {
-            functions = new Dictionary<string, IFunction>(new FuncComp() as IEqualityComparer<string>);
+            functions = new Dictionary<string, IFunction>(new FuncComp());
             functions.Add("sin", new Sin());
             functions.Add("cos", new Cos());
             functions.Add("tan", new Tan());
@@ -114,6 +114,10 @@ namespace ExprCalc.Core.Functions
 
         public double Calc(params double[] args)
         {
+            if (args.Length != GetParamCount())
+            {
+                throw new ArgumentException(string.Format("function \"{0}\" requires {1} parameter(s), but found {2} of them", GetName(), GetParamCount(), args.Length));
+            }
             return Math.Sin(args[0]);
         }
 
@@ -139,6 +143,10 @@ namespace ExprCalc.Core.Functions
 
         public double Calc(params double[] args)
         {
+            if (args.Length != GetParamCount())
+            {
+                throw new ArgumentException(string.Format("function \"{0}\" requires {1} parameter(s), but found {2} of them", GetName(), GetParamCount(), args.Length));
+            }
             return Math.Cos(args[0]);
         }
 
@@ -164,6 +172,10 @@ namespace ExprCalc.Core.Functions
 
         public double Calc(params double[] args)
         {
+            if (args.Length != GetParamCount())
+            {
+                throw new ArgumentException(string.Format("function \"{0}\" requires {1} parameter(s), but found {2} of them", GetName(), GetParamCount(), args.Length));
+            }
             return Math.Tan(args[0]);
         }
 
@@ -189,6 +201,10 @@ namespace ExprCalc.Core.Functions
 
         public double Calc(params double[] args)
         {
+            if (args.Length != GetParamCount())
+            {
+                throw new ArgumentException(string.Format("function \"{0}\" requires {1} parameter(s), but found {2} of them", GetName(), GetParamCount(), args.Length));
+            }
             return Math.Log(args[0]);
         }
 
@@ -214,6 +230,10 @@ namespace ExprCalc.Core.Functions
 
         public double Calc(params double[] args)
         {
+            if (args.Length != GetParamCount())
+            {
+                throw new ArgumentException(string.Format("function \"{0}\" requires {1} parameter(s), but found {2} of them", GetName(), GetParamCount(), args.Length));
+            }
             return Math.Log10(args[0]);
         }
 
@@ -239,6 +259,10 @@ namespace ExprCalc.Core.Functions
 
         public double Calc(params double[] args)
         {
+            if (args.Length != GetParamCount())
+            {
+                throw new ArgumentException(string.Format("function \"{0}\" requires {1} parameter(s), but found {2} of them", GetName(), GetParamCount(), args.Length));
+            }
             return Math.Log(args[0], args[1]);
         }
 
